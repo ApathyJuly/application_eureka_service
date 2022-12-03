@@ -1,0 +1,10 @@
+# rabbitMq配置 账号密码都是：guest
+spring:
+  rabbitmq:
+    #配置rabbitMq启用开关：false:关闭
+    enable: false
+    host: 127.0.0.1
+    port: 15672
+    username: guest
+    password: guest
+    virtual-host: /wsp

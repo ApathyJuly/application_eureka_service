@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 登录</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script type="text/javascript" src="../layui/layui.js"></script>
+</head>
+<body class="gray-bg">
+
+<div>
+    <div style="text-align: center;margin-top: 10%;">
+        <div>
+            <h1 class="logo-name">h</h1>
+        </div>
+        <h3>欢迎使用 hAdmin</h3>
+
+        <form class="m-t" action="#">
+            <div class="form-group" style="margin-top: 20px">
+                <input id="username" type="text" class="form-control" placeholder="用户名">
+            </div>
+            <div class="form-group" style="margin-top: 20px">
+                <input id="password" type="password" class="form-control" placeholder="密码">
+            </div>
+            <button type="submit" class="btn btn-primary block full-width m-b" style="margin-top: 20px" onclick="subminToLogin()">登 录</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    layui.use('slider', function(){
+        var slider = layui.slider;
+        //滑块渲染
+        slider.render({
+            elem: '#slideTest1'  //绑定元素
+        });
+    });
+    function subminToLogin() {
+        alert(0)
+        let usernameV = $("#username").val();
+        let passwordV = $("#password").val();
+        alert(usernameV+'/'+passwordV)
+        $.ajax({
+            type : "post",
+            url : "userController/login",
+            data : {
+                userName : usernameV,
+                password : passwordV
+            },
+            success : function(data) {
+                alert("submit")
+                window.location.href = "view/frame/500.jsp";
+            },
+            error : function() {
+                // window.location.href = "view/frame/500.jsp";
+            }
+
+        });
+    }
+</script>
+</body>
+
+</html>

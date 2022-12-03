@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>map</title>
+    <link type="text/css" href="../maps/mapdist/openlayers/ol.css" rel="stylesheet" />
+    <script type="text/javascript" src="../maps/mapdist/openlayers/ol.js" charset="utf-8"></script>
+</head>
+<body>
+    <div id="map" style="width: 100%"></div>
+    <script>
+        let gaodeMapLayer = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+                url: 'maps/mapdist/tiles/{z}/{x}/{y}.png'
+            })
+        });
+
+        let map = new ol.Map({
+            layers: [gaodeMapLayer],
+            view: new ol.View({
+                center: [102.8252, 24.8851],
+                projection: 'EPSG:4326',
+                zoom: 12
+            }),
+            target: 'map'
+        });
+    </script>
+</body>
+</html>

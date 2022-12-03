@@ -1,0 +1,8 @@
+# 监视器监视地址配置
+# 监视器这个配置必须在yml文件中配置，不能在properties中配置，解决监视器：Unable to connect to Command Metric Stream；
+#  控制台：ashboardConfiguration$ProxyStreamServlet :
+# Origin parameter: http://localhost:8764/actuator/hystrix.stream is not in the allowed list of proxy host names.
+# If it should be allowed add it to hystrix.dashboard.proxyStreamAllowList.
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: "localhost"
