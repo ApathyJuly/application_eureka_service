@@ -1,0 +1,2 @@
+# application_eureka_service
+my_sprng_project_eureka
