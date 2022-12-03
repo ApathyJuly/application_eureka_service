@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.service_hi.shopping_mail.dao.EurekaGoodsDao">
+
+    <resultMap type="com.example.service_hi.shopping_mail.entity.EurekaGoods" id="EurekaGoodsMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="goodsImg" column="goods_img" jdbcType="VARCHAR"/>
+        <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
+        <result property="goodsDetial" column="goods_detial" jdbcType="VARCHAR"/>
+        <result property="goodsPrice" column="goods_price" jdbcType="NUMERIC"/>
+        <result property="goodsSalesVolume" column="goods_sales_volume" jdbcType="INTEGER"/>
+        <result property="goodCreateTime" column="good_create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="EurekaGoodsMap">
+        select
+          id, goods_img, goods_name, goods_detial, goods_price, goods_sales_volume, good_create_time
+        from springclouddata.eureka_goods
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EurekaGoodsMap">
+        select
+          id, goods_img, goods_name, goods_detial, goods_price, goods_sales_volume, good_create_time
+        from springclouddata.eureka_goods
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="EurekaGoodsMap">
+        select
+        id, goods_img, goods_name, goods_detial, goods_price, goods_sales_volume, good_create_time
+        from springclouddata.eureka_goods
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="goodsImg != null and goodsImg != ''">
+                and goods_img = #{goodsImg}
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                and goods_name = #{goodsName}
+            </if>
+            <if test="goodsDetial != null and goodsDetial != ''">
+                and goods_detial = #{goodsDetial}
+            </if>
+            <if test="goodsPrice != null">
+                and goods_price = #{goodsPrice}
+            </if>
+            <if test="goodsSalesVolume != null">
+                and goods_sales_volume = #{goodsSalesVolume}
+            </if>
+            <if test="goodCreateTime != null">
+                and good_create_time = #{goodCreateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into springclouddata.eureka_goods(goods_img, goods_name, goods_detial, goods_price, goods_sales_volume, good_create_time)
+        values (#{goodsImg}, #{goodsName}, #{goodsDetial}, #{goodsPrice}, #{goodsSalesVolume}, #{goodCreateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update springclouddata.eureka_goods
+        <set>
+            <if test="goodsImg != null and goodsImg != ''">
+                goods_img = #{goodsImg},
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                goods_name = #{goodsName},
+            </if>
+            <if test="goodsDetial != null and goodsDetial != ''">
+                goods_detial = #{goodsDetial},
+            </if>
+            <if test="goodsPrice != null">
+                goods_price = #{goodsPrice},
+            </if>
+            <if test="goodsSalesVolume != null">
+                goods_sales_volume = #{goodsSalesVolume},
+            </if>
+            <if test="goodCreateTime != null">
+                good_create_time = #{goodCreateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from springclouddata.eureka_goods where id = #{id}
+    </delete>
+
+</mapper>

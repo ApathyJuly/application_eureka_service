@@ -1,0 +1,29 @@
+
+# springcloud getaway服务限流以及redis
+# 配置了RequestRateLimiter的限流过滤器，该过滤器需要配置三个参数：
+#burstCapacity，令牌桶总容量。
+#replenishRate，令牌桶每秒填充平均速率。
+#key-resolver，用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。
+#KeyResolver需要实现resolve方法，比如根据Hostname进行限流，则需要用hostAddress去判断。
+#实现完KeyResolver之后，需要将这个类的Bean注册到Ioc容器中。
+#predicates，这个路由规则会在东8区的2020-01-20 17:42:47后，将请求都转跳到http://httpbin.org:80/get
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: limit_route
+#          uri: http://httpbin.org:80/get
+#          predicates:
+#            - After=2020-01-20T17:42:47.789-07:00[America/Denver]
+#          filters:
+#            - name: RequestRateLimiter
+#              args:
+#                key-resolver: '#{@hostAddrKeyResolver}'
+#                redis-rate-limiter.replenishRate: 1
+#                redis-rate-limiter.burstCapacity: 3
+#  application:
+#    name: gateway-limiter
+#  redis:
+#    host: localhost
+#    port: 6379
+#    database: 0
