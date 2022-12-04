@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--    引入VUE-->
+    <script src="../../static/vue/dev/vue.js"></script>
+<!--    <script src="vue/prod/vue.min.js"></script>-->
+    <!--    引入elementUI-->
+    <link rel="stylesheet" href="../../static/vue/elementUI/lib-master/theme-chalk/index.css">
+    <script src="../../static/vue/elementUI/lib-master/index.js"></script>
+</head>
+<body>
+    <div>
+        head
+    </div>
+    <div id="root">
+        <bug-home></bug-home>
+    </div>
+    <div>
+        foot
+    </div>
+    <script>
+        // 设置不能有提示，vue.js会在控制太打印提示信息
+        Vue.config.productionTip = false;
+        // Vue.use(httpVueLoader)
+        // 开始创建vue实例
+        new Vue({
+            el: "#root", // el用于指定当前vue实例为那个容器服务，通常为css选择器，也可以是document.getElementById()
+            data: { // 双向绑定书模型
+                bugNumber: 0,
+                msg: '',
+                userId: null,
+                UserName: '',
+                userPermis: false
+            },
+            methods: {
+                init: function () {
+                    alert('init')
+                }
+            },
+            // components: {
+            //     'bug-home': httpVueLoader('./homePage/bugHome.vue'),
+            // },
+        })
+    </script>
+</body>
+</html>
