@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>fileListPage</title>
+</head>
+<body>
+    <button>选择文件层级</button>
+</body>
+<script>
+    const but = document.querySelector('button');
+    // 点击选择触发同步的选择方法
+    but.onclick = async function() {
+        try {
+            // 得到文件夹的内容,并获取句柄。
+            const handle = await showDirectoryPicker();
+            console.log(handle)
+            // 文件句柄树形结构处理
+            const root = await processHandel(handle);
+            console.log(root)
+            // 文件结构渲染
+            await renderFile(root);
+        } catch (e) {
+            // 用户拒绝访问文件
+            alert('系统需要访问本地文件才能加载！')
+        }
+    }
+    // 异步方法，该方法获取句柄下文件内容（作为一个关键字放在函数的前面，表示该函数是一个异步函数，
+    // 意味着该函数的执行不会阻塞后面代码的执行 异步函数的调用跟普通函数一样）
+    /**
+     * 获取句柄下文件内容：异步方法，该方法获取句柄下文件内容（async作为一个关键字放在函数的前面，表示该函数是一个异步函数，
+     * 意味着该函数的执行不会阻塞后面代码的执行 异步函数的调用跟普通函数一样）
+     *
+     * @param handle
+     * @returns {Promise<void>}
+     */
+    async function processHandel(handle) {
+        // 判断该句柄是不是一个文件,是文件就直接返回。
+        if(handle.kind === 'file') {
+            return handle;
+        }
+        // 得到该句柄的异步迭代器
+        const entriesIter = handle.entries();
+        // 等待异步函数获取到句柄并编辑文件句柄的迭代器；（await即等待，用于等待一个Promise对象。它只能在异步函数 async function中使用，否则会报错）
+        handle.children = [];
+        for await (const item of entriesIter) {
+            // 递归处理句柄
+            handle.children.push(await processHandel(item[1]))
+        }
+        return handle;
+    }
+
+    async function renderFile(root) {
+        // 得到文件
+        const Handle = root.children[1];
+        const file = await Handle.getFile();
+
+        // 文件流读取文件
+        const fileReader = new FileReader();
+        fileReader.onload = e => {
+            // 读取文件
+            console.log(e.target.result)
+        }
+        fileReader.readAsText(file);
+
+    }
+</script>
+</html>
